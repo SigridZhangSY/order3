@@ -51,5 +51,12 @@ public class TestHelper {
         }};
     }
 
-    
+    public static Map<String, Object> product(String name){
+        return new HashMap<String, Object>() {{
+            put("name", name);
+            put("description", "red apple");
+            put("price", 1.1);
+
+        }};
+    }
 }
