@@ -18,10 +18,6 @@ public class OrderRecord implements Order {
     private String time;
     private List<OrderItemRecord> items;
 
-    public OrderRecord(String userId){
-        id = "1";
-        this.userId = userId;
-    }
 
     public OrderRecord(){
 

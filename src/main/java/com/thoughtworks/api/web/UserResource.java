@@ -1,5 +1,6 @@
 package com.thoughtworks.api.web;
 
+import com.thoughtworks.api.infrastructure.core.OrderRepository;
 import com.thoughtworks.api.infrastructure.core.User;
 import com.thoughtworks.api.infrastructure.core.UserRepository;
 import com.thoughtworks.api.infrastructure.records.OrderRecord;
@@ -38,8 +39,10 @@ public class UserResource {
     @POST
     @Path("{userId}/products")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createOrder(@PathParam("userId") String userId,
-                                @Context Routes routes){
-        return Response.created(routes.order(new OrderRecord(userId))).build();
+    public Response createOrder(Map<String, Object> info,
+                                @PathParam("userId") String userId,
+                                @Context Routes routes,
+                                @Context OrderRepository orderRepository){
+        return Response.created(routes.order(orderRepository.createOrder(info, userId))).build();
     }
 }
