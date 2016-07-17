@@ -25,6 +25,8 @@ public class UserResource {
     public Response createProduct(Map<String, Object> info,
                                   @Context UserRepository userRepository,
                                   @Context Routes routes){
+        if(info.getOrDefault("name", "").toString().trim().isEmpty())
+            throw new InvalidParameterException("name is required");
         if(userRepository.findUserByName(String.valueOf(info.get("name"))).isPresent())
             return Response.status(Response.Status.BAD_REQUEST).entity("User with same name already exists").build();
         User user = userRepository.createUser(info);
