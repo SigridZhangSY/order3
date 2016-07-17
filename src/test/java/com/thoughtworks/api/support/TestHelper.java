@@ -52,4 +52,12 @@ public class TestHelper {
         orderMap.put("order_items", list);
         return orderMap;
     }
+
+    public static Map<String, Object> payment(){
+        Map payMap = new HashMap<String, Object>();
+        payMap.put("pay_type", "CASH");
+        payMap.put("amount", "100");
+
+        return payMap;
+    }
 }

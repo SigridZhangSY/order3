@@ -105,4 +105,11 @@ public class UserResource {
         return map;
     }
 
+    @POST
+    @Path("{userId}/orders/{orderId}/payment")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createPaymentForOrder(){
+        return Response.status(201).build();
+    }
+
 }
