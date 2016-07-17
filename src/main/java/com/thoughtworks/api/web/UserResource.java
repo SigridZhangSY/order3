@@ -1,6 +1,7 @@
 package com.thoughtworks.api.web;
 
 import com.thoughtworks.api.infrastructure.core.User;
+import com.thoughtworks.api.infrastructure.core.UserRepository;
 import com.thoughtworks.api.infrastructure.records.UserRecord;
 import com.thoughtworks.api.web.jersey.Routes;
 
@@ -21,8 +22,9 @@ public class UserResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProduct(Map<String, Object> info,
+                                  @Context UserRepository userRepository,
                                   @Context Routes routes){
-        User user = new UserRecord();
+        User user = userRepository.createUser(info);
         return Response.created(routes.user(user)).build();
     }
 }

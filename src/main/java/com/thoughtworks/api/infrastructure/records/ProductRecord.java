@@ -16,7 +16,7 @@ public class ProductRecord implements Product, Record{
     private float price;
 
     public ProductRecord(){
-        id = "1";
+
     }
 
     @Override

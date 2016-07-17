@@ -10,7 +10,7 @@ public class UserRecord implements User{
     public String name;
 
     public UserRecord(){
-        this.id = "1";
+
     }
 
     @Override
