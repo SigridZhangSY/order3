@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -25,12 +26,20 @@ public class ProductRepositoryTest {
     @Test
     public void should_create_and_get_product(){
 
-
         Product product = productRepository.createProduct(TestHelper.product("apple"));
 
         assertThat(product.getName(), is("apple"));
         assertThat(product.getDescription(), is("red apple"));
         assertEquals(product.getPrice(), 1.1, 0.01);
 
+    }
+    @Test
+    public void should_get_all_products(){
+
+        productRepository.createProduct(TestHelper.product("apple"));
+        List<Product> res = productRepository.getAllProducts();
+
+        assertEquals(res.size(), 1);
+        assertThat(res.get(0).getName(), is("apple"));
     }
 }
