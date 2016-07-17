@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import javax.ws.rs.core.Response;
 
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -24,9 +25,10 @@ public class ProductResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_able_return_201_when_create_product(){
+    public void should_able_return_uri_when_create_product(){
         Response post = post("/products", TestHelper.product("apple"));
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
+        assertThat(post.getLocation().toString(), endsWith("/products/1"));
     }
 
 }
