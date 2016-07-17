@@ -1,5 +1,8 @@
 package com.thoughtworks.api.infrastructure.resources;
 
+import com.thoughtworks.api.infrastructure.core.Product;
+import com.thoughtworks.api.infrastructure.core.ProductRepository;
+import com.thoughtworks.api.infrastructure.core.User;
 import com.thoughtworks.api.infrastructure.core.UserRepository;
 import com.thoughtworks.api.support.ApiSupport;
 import com.thoughtworks.api.support.ApiTestRunner;
@@ -27,6 +30,10 @@ import static org.junit.Assert.assertThat;
 public class UserResourceTest extends ApiSupport {
     @Inject
     UserRepository userRepository;
+
+    @Inject
+    ProductRepository productRepository;
+
     @Before
     public void setUp() throws Exception {
         super.setUp();
@@ -52,5 +59,14 @@ public class UserResourceTest extends ApiSupport {
         Response post = post("/users", map);
         assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
 
+    }
+
+    @Test
+    public void should_return_201_when_create_order(){
+        User user = userRepository.createUser(TestHelper.user("kayla"));
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+
+        Response post = post("/users/" + user.getId() + "/products", TestHelper.order("kayla", product.getId()));
+        assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
     }
 }
