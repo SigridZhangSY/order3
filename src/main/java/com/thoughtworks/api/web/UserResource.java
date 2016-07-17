@@ -2,6 +2,7 @@ package com.thoughtworks.api.web;
 
 import com.thoughtworks.api.infrastructure.core.*;
 import com.thoughtworks.api.infrastructure.records.OrderRecord;
+import com.thoughtworks.api.infrastructure.records.PaymentRecord;
 import com.thoughtworks.api.infrastructure.records.UserRecord;
 import com.thoughtworks.api.web.exception.InvalidParameterException;
 import com.thoughtworks.api.web.jersey.Routes;
@@ -108,8 +109,10 @@ public class UserResource {
     @POST
     @Path("{userId}/orders/{orderId}/payment")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPaymentForOrder(){
-        return Response.status(201).build();
+    public Response createPaymentForOrder(@PathParam("userId") String userId,
+                                          @PathParam("orderId") String orderId,
+                                          @Context Routes routes){
+        return Response.created(routes.payment(new PaymentRecord(userId, orderId))).build();
     }
 
 }
