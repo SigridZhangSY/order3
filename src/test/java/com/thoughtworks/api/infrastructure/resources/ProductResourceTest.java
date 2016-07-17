@@ -1,5 +1,6 @@
 package com.thoughtworks.api.infrastructure.resources;
 
+import com.thoughtworks.api.infrastructure.core.Product;
 import com.thoughtworks.api.infrastructure.core.ProductRepository;
 import com.thoughtworks.api.support.ApiSupport;
 import com.thoughtworks.api.support.ApiTestRunner;
@@ -58,6 +59,14 @@ public class ProductResourceTest extends ApiSupport {
         final List<Map> products = get.readEntity(List.class);
         assertEquals(products.size(), 1);
         assertThat(products.get(0).get("name"), is("apple"));
+    }
+
+    @Test
+    public void should_return_200_when_get_a_product_by_id(){
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+
+        Response get = get("/products/" + product.getId());
+        assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
     }
 
 }
