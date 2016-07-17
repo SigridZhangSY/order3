@@ -16,6 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by syzhang on 7/17/16.
@@ -42,7 +43,11 @@ public class UserResource {
     public Response createOrder(Map<String, Object> info,
                                 @PathParam("userId") String userId,
                                 @Context Routes routes,
-                                @Context OrderRepository orderRepository){
+                                @Context OrderRepository orderRepository,
+                                @Context UserRepository userRepository){
+        Optional<User> user = userRepository.findUserById(userId);
+        if(user.isPresent() == false)
+            return Response.status(Response.Status.BAD_REQUEST).entity("User dose not exists").build();
         return Response.created(routes.order(orderRepository.createOrder(info, userId))).build();
     }
 }
