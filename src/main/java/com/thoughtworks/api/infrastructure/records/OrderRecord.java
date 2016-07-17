@@ -1,13 +1,16 @@
 package com.thoughtworks.api.infrastructure.records;
 
 import com.thoughtworks.api.infrastructure.core.Order;
+import com.thoughtworks.api.web.jersey.Routes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by syzhang on 7/17/16.
  */
-public class OrderRecord implements Order {
+public class OrderRecord implements Order, Record {
 
     private String id;
     private String userId;
@@ -62,4 +65,23 @@ public class OrderRecord implements Order {
     public List<OrderItemRecord> getItems() {
         return items;
     }
+
+    @Override
+    public Map<String, Object> toJson(Routes routes) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("uri", routes.order(OrderRecord.this));
+        map.put("name", name);
+        map.put("address", address);
+        map.put("phone", phone);
+        map.put("created_at", time);
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> toRefJson(Routes routes) {
+        return toJson(routes);
+    }
+
+
 }

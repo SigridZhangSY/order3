@@ -1,9 +1,6 @@
 package com.thoughtworks.api.web;
 
-import com.thoughtworks.api.infrastructure.core.OrderRepository;
-import com.thoughtworks.api.infrastructure.core.ProductRepository;
-import com.thoughtworks.api.infrastructure.core.User;
-import com.thoughtworks.api.infrastructure.core.UserRepository;
+import com.thoughtworks.api.infrastructure.core.*;
 import com.thoughtworks.api.infrastructure.records.OrderRecord;
 import com.thoughtworks.api.infrastructure.records.UserRecord;
 import com.thoughtworks.api.web.exception.InvalidParameterException;
@@ -70,9 +67,10 @@ public class UserResource {
 
     @GET
     @Path("{userId}/orders")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String getAllOrders(){
-        return "OK";
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> getAllOrders(@PathParam("userId") String userId,
+                               @Context OrderRepository orderRepository){
+        return orderRepository.getOrdersForUser(userId);
     }
 
 }
