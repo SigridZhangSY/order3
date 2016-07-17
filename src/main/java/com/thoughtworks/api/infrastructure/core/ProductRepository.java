@@ -14,4 +14,6 @@ public interface ProductRepository {
     List<Product> getAllProducts();
 
     Optional<Product> findProductById(String productId);
+
+    float getPrice(String productId);
 }

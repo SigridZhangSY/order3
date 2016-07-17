@@ -35,6 +35,11 @@ public class ProductRepository implements com.thoughtworks.api.infrastructure.co
         return Optional.ofNullable(productMapper.findById(productId));
     }
 
+    @Override
+    public float getPrice(String productId) {
+        return productMapper.findById(productId).getPrice();
+    }
+
     private String nextIdentity() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }

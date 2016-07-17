@@ -14,4 +14,5 @@ public interface ProductMapper {
     Product findById(String id);
 
     List<Product> getProducts();
+
 }
