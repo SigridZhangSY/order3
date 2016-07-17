@@ -10,9 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by syzhang on 7/17/16.
@@ -79,8 +77,32 @@ public class UserResource {
     @GET
     @Path("{userId}/orders/{orderId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String findOrderForUser(){
-        return "OK";
+    public Map<String, Object> findOrderForUser(@PathParam("userId") String userId,
+                                                @PathParam("orderId") String orderId,
+                                                @Context Routes routes,
+                                                @Context OrderRepository orderRepository){
+
+        Order order = orderRepository.getOrderDetails(orderId);
+        Map<String, Object> map = new HashMap();
+        map.put("uri", routes.order(order));
+        map.put("name", order.getName());
+        map.put("address", order.getAddress());
+        map.put("phone", order.getPhone());
+        map.put("total_price", order.getTotalPrice());
+        map.put("created_at", order.getTime());
+
+        List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
+        for(int i = 0; i < order.getItems().size(); i++){
+            Map<String, Object> item = new HashMap();
+            item.put("product_id", order.getItems().get(i).getProductId());
+            item.put("quantity", order.getItems().get(i).getQuantity());
+            item.put("amount", order.getItems().get(i).getAmount());
+            items.add(item);
+        }
+
+        map.put("order_items", items);
+
+        return map;
     }
 
 }
