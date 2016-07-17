@@ -6,6 +6,7 @@ import com.thoughtworks.api.infrastructure.mybatis.mappers.ProductMapper;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -30,8 +31,8 @@ public class ProductRepository implements com.thoughtworks.api.infrastructure.co
     }
 
     @Override
-    public Product findProductById(String productId) {
-        return productMapper.findById(productId);
+    public Optional<Product> findProductById(String productId) {
+        return Optional.ofNullable(productMapper.findById(productId));
     }
 
     private String nextIdentity() {

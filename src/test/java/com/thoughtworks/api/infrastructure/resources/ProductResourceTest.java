@@ -71,4 +71,10 @@ public class ProductResourceTest extends ApiSupport {
         assertThat(products.get("uri"), is("/products/" + product.getId()));
     }
 
+    @Test
+    public void should_return_404_when_no_product_exists(){
+        Response get = get("/products/111");
+        assertThat(get.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
+    }
+
 }

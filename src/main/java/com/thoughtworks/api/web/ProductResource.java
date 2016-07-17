@@ -44,7 +44,7 @@ public class ProductResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Product getProductById(@PathParam("productId") String productId,
                                  @Context ProductRepository productRepository){
-        return productRepository.findProductById(productId);
+        return productRepository.findProductById(productId).orElseThrow(() -> new NotFoundException("Product not found"));
     }
 
 }

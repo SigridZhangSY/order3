@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class ProductRepositoryTest {
     @Test
     public void should_find_product_by_id(){
         Product product = productRepository.createProduct(TestHelper.product("apple"));
-        Product product_res = productRepository.findProductById(product.getId());
+        Product product_res = productRepository.findProductById(product.getId()).orElseThrow(() -> new NotFoundException("Product not found"));;
 
         assertThat(product_res.getName(), is("apple"));
     }
