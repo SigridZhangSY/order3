@@ -62,11 +62,13 @@ public class ProductResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_200_when_get_a_product_by_id(){
+    public void should_return_detail_when_get_a_product_by_id(){
         Product product = productRepository.createProduct(TestHelper.product("apple"));
 
         Response get = get("/products/" + product.getId());
         assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final Map products = get.readEntity(Map.class);
+        assertThat(products.get("uri"), is("/products/" + product.getId()));
     }
 
 }

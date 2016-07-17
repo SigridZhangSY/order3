@@ -40,10 +40,11 @@ public class ProductResource {
     }
 
     @GET
-    @Path("{userId}")
+    @Path("{productId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getProductById(){
-        return "OK";
+    public Product getProductById(@PathParam("productId") String productId,
+                                 @Context ProductRepository productRepository){
+        return productRepository.findProductById(productId);
     }
 
 }
