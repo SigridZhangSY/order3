@@ -122,4 +122,11 @@ public class UserResource {
         return Response.created(routes.payment(paymentRepository.createPaymentForOrder(info, userId, orderId))).build();
     }
 
+    @GET
+    @Path("{userId}/orders/{orderId}/payment")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getPaymentForOrder(){
+        return "OK";
+    }
+
 }
