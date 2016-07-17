@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -34,5 +35,16 @@ public class PaymentRepositoryTest {
         Payment payment = paymentRepository.createPaymentForOrder(TestHelper.payment(), user.getId(), order.getId());
 
         assertThat(payment.getOrderId(), is(order.getId()));
+    }
+
+    @Test
+    public void should_find_payment(){
+        User user = userRepository.createUser(TestHelper.user("sdcc"));
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+        Order order = orderRepository.createOrder(TestHelper.order("kayla", product.getId()), user.getId());
+        Payment payment = paymentRepository.createPaymentForOrder(TestHelper.payment(), user.getId(),order.getId());
+
+        Payment payment_res = paymentRepository.findPaymentByOrderId(order.getId()).orElseThrow(() -> new NotFoundException("Payment not found"));
+        assertThat(payment_res.getOrderId(), is(order.getId()));
     }
 }
