@@ -6,9 +6,7 @@ import com.thoughtworks.api.infrastructure.records.ProductRecord;
 import com.thoughtworks.api.web.exception.InvalidParameterException;
 import com.thoughtworks.api.web.jersey.Routes;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,6 +30,12 @@ public class ProductResource {
 
         Product product= productRepository.createProduct(info);
         return Response.created(routes.product(product)).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllProducts(){
+        return "OK";
     }
 }
 

@@ -43,4 +43,10 @@ public class ProductResourceTest extends ApiSupport {
         assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
     }
 
+    @Test
+    public void should_return_200_when_get_all_products(){
+        Response get = get("/products");
+        assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+    }
+
 }
