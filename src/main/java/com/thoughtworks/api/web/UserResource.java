@@ -125,8 +125,11 @@ public class UserResource {
     @GET
     @Path("{userId}/orders/{orderId}/payment")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPaymentForOrder(){
-        return "OK";
+    public Payment getPaymentForOrder(@PathParam("userId") String userId,
+                                      @PathParam("orderId") String orderId,
+                                      @Context PaymentRepository paymentRepository){
+        return  paymentRepository.findPaymentByOrderId(orderId).orElseThrow(() -> new NotFoundException("Payment not found"));
+
     }
 
 }
