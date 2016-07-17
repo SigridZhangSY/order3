@@ -148,13 +148,13 @@ public class UserResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_uri_when_create_payment(){
+    public void should_return_201_when_create_payment_with_specified_parameter(){
         User user = userRepository.createUser(TestHelper.user("kayla"));
         Product product = productRepository.createProduct(TestHelper.product("apple"));
         Order order = orderRepository.createOrder(TestHelper.order("kayla",product.getId()), user.getId());
+
         Response post = post("/users/" + user.getId() + "/orders/" + order.getId() + "/payment", TestHelper.payment());
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
-        assertThat(post.getLocation().toString(), endsWith("/users/" + user.getId() + "/orders/" + order.getId() + "/payment"));
 
     }
 

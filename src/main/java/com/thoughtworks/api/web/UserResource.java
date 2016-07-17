@@ -109,10 +109,12 @@ public class UserResource {
     @POST
     @Path("{userId}/orders/{orderId}/payment")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPaymentForOrder(@PathParam("userId") String userId,
+    public Response createPaymentForOrder(Map<String, Object> info,
+                                          @PathParam("userId") String userId,
                                           @PathParam("orderId") String orderId,
-                                          @Context Routes routes){
-        return Response.created(routes.payment(new PaymentRecord(userId, orderId))).build();
+                                          @Context Routes routes,
+                                          @Context PaymentRepository paymentRepository){
+        return Response.created(routes.payment(paymentRepository.createPaymentForOrder(info, userId, orderId))).build();
     }
 
 }
