@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserRepository {
     User createUser(Map<String, Object> info);
     Optional<User> findUserByName(String name);
+
 }

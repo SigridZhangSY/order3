@@ -52,9 +52,5 @@ public class ProductRepositoryTest {
         assertThat(product_res.getName(), is("apple"));
     }
 
-    @Test
-    public void should_get_price(){
-        Product product = productRepository.createProduct(TestHelper.product("apple"));
-        assertEquals(productRepository.getPrice(product.getId()), 1.1, 0.01);
-    }
+
 }

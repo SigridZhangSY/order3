@@ -15,4 +15,5 @@ public interface ProductMapper {
 
     List<Product> getProducts();
 
+    Float getPrice(String productId);
 }

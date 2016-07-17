@@ -34,4 +34,5 @@ public class UserRepositoryTest {
 
         assertThat(user_res.getName(), is("kayla"));
     }
+
 }

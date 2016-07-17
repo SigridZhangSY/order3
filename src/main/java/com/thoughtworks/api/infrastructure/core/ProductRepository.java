@@ -15,5 +15,4 @@ public interface ProductRepository {
 
     Optional<Product> findProductById(String productId);
 
-    float getPrice(String productId);
 }
