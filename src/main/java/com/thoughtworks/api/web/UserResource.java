@@ -82,7 +82,7 @@ public class UserResource {
                                                 @Context Routes routes,
                                                 @Context OrderRepository orderRepository){
 
-        Order order = orderRepository.getOrderDetails(orderId);
+        Order order = orderRepository.getOrderDetails(orderId).orElseThrow(() -> new NotFoundException("Order not found"));
         Map<String, Object> map = new HashMap();
         map.put("uri", routes.order(order));
         map.put("name", order.getName());

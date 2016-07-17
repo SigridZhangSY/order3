@@ -70,7 +70,7 @@ public class OrderRepositoryTest {
         String productId = product.getId();
         Order order = orderRepository.createOrder(TestHelper.order("kayla", productId), userId);
 
-        Order order_res = orderRepository.getOrderDetails(order.getId());
+        Order order_res = orderRepository.getOrderDetails(order.getId()).orElseThrow(() -> new NotFoundException("Order not found"));
         assertThat(order_res.getName(), is("kayla"));
 
     }

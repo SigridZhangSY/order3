@@ -138,4 +138,13 @@ public class UserResourceTest extends ApiSupport {
 
     }
 
+    @Test
+    public void should_return_400_when_order_no_exist(){
+        User user = userRepository.createUser(TestHelper.user("kayla"));
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+        Order order = orderRepository.createOrder(TestHelper.order("kayla",product.getId()), user.getId());
+        Response get = get("/users/" + user.getId() + "/orders/1");
+        assertThat(get.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
+    }
+
 }
