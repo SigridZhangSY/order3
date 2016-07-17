@@ -77,4 +77,5 @@ public class ProductResourceTest extends ApiSupport {
         assertThat(get.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
     }
 
+
 }

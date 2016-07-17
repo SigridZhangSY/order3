@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import javax.ws.rs.core.Response;
 
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -25,8 +26,9 @@ public class UserResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_201_when_create_user(){
+    public void should_return_uri_when_create_user(){
         Response post = post("/users", TestHelper.user("kayla"));
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
+        assertThat(post.getLocation().toString(), endsWith("/users/1"));
     }
 }

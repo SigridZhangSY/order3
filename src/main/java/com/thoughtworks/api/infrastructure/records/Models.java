@@ -2,7 +2,6 @@ package com.thoughtworks.api.infrastructure.records;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
-import com.thoughtworks.api.domain.user.UserRepository;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.*;
 import org.apache.ibatis.type.TypeHandler;
