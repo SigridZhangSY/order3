@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -44,4 +46,19 @@ public class OrderRepositoryTest {
 
         assertThat(order.getName(), is("kayla"));
     }
+
+    @Test
+    public void should_find_order_for_user() {
+        User user = userRepository.createUser(TestHelper.user("sdcc"));
+        String userId = user.getId();
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+        String productId = product.getId();
+        Order order = orderRepository.createOrder(TestHelper.order("kayla", productId), userId);
+
+        List<Order> order_res = orderRepository.getOrdersForUser(userId);
+        assertEquals(order_res.size(), 1);
+        assertThat(order_res.get(0).getName(), is("kayla"));
+
+    }
+
 }
