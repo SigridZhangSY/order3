@@ -76,4 +76,11 @@ public class UserResource {
         return orderRepository.getOrdersForUser(userId);
     }
 
+    @GET
+    @Path("{userId}/orders/{orderId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String findOrderForUser(){
+        return "OK";
+    }
+
 }
