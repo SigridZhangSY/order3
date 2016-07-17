@@ -1,5 +1,6 @@
 package com.thoughtworks.api.infrastructure.resources;
 
+import com.thoughtworks.api.infrastructure.core.ProductRepository;
 import com.thoughtworks.api.support.ApiSupport;
 import com.thoughtworks.api.support.ApiTestRunner;
 import com.thoughtworks.api.support.TestHelper;
@@ -8,13 +9,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -22,6 +26,8 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(ApiTestRunner.class)
 public class ProductResourceTest extends ApiSupport {
+    @Inject
+    ProductRepository productRepository;
     @Before
     public void setUp() throws Exception {
         super.setUp();
@@ -44,9 +50,14 @@ public class ProductResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_200_when_get_all_products(){
+    public void should_return_detail_when_get_all_products(){
+        productRepository.createProduct(TestHelper.product("apple"));
+
         Response get = get("/products");
         assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final List<Map> products = get.readEntity(List.class);
+        assertEquals(products.size(), 1);
+        assertThat(products.get(0).get("name"), is("apple"));
     }
 
 }

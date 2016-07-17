@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,8 +35,8 @@ public class ProductResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAllProducts(){
-        return "OK";
+    public List<Product> getAllProducts(@Context ProductRepository productRepository){
+        return productRepository.getAllProducts();
     }
 }
 
