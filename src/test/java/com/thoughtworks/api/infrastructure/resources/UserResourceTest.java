@@ -1,5 +1,6 @@
 package com.thoughtworks.api.infrastructure.resources;
 
+import com.thoughtworks.api.infrastructure.core.UserRepository;
 import com.thoughtworks.api.support.ApiSupport;
 import com.thoughtworks.api.support.ApiTestRunner;
 import com.thoughtworks.api.support.TestHelper;
@@ -8,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -20,6 +22,8 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(ApiTestRunner.class)
 public class UserResourceTest extends ApiSupport {
+    @Inject
+    UserRepository userRepository;
     @Before
     public void setUp() throws Exception {
         super.setUp();
@@ -29,5 +33,13 @@ public class UserResourceTest extends ApiSupport {
     public void should_return_210_when_create_user_with_specified_parameter(){
         Response post = post("/users", TestHelper.user("kayla"));
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
+    }
+
+    @Test
+    public void should_return_400_when_user_exists(){
+        userRepository.createUser(TestHelper.user("kayla"));
+        Response post = post("/users", TestHelper.user("kayla"));
+        assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
+
     }
 }

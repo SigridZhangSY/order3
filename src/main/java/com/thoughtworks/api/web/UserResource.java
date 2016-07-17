@@ -3,6 +3,7 @@ package com.thoughtworks.api.web;
 import com.thoughtworks.api.infrastructure.core.User;
 import com.thoughtworks.api.infrastructure.core.UserRepository;
 import com.thoughtworks.api.infrastructure.records.UserRecord;
+import com.thoughtworks.api.web.exception.InvalidParameterException;
 import com.thoughtworks.api.web.jersey.Routes;
 
 import javax.ws.rs.Consumes;
@@ -24,6 +25,8 @@ public class UserResource {
     public Response createProduct(Map<String, Object> info,
                                   @Context UserRepository userRepository,
                                   @Context Routes routes){
+        if(userRepository.findUserByName(String.valueOf(info.get("name"))).isPresent())
+            return Response.status(Response.Status.BAD_REQUEST).entity("User with same name already exists").build();
         User user = userRepository.createUser(info);
         return Response.created(routes.user(user)).build();
     }
