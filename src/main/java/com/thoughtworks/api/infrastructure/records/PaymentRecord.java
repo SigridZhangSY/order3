@@ -16,6 +16,10 @@ public class PaymentRecord implements Payment {
         this.orderId = orderId;
         this.userId = userId;
     }
+    public PaymentRecord(){
+        this.orderId = orderId;
+        this.userId = userId;
+    }
 
     @Override
     public String getOrderId() {

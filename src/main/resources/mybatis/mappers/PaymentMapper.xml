@@ -1,0 +1,14 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.thoughtworks.api.infrastructure.mybatis.mappers.PaymentMapper">
+    <insert id="savePayment">
+            INSERT INTO
+            PAYMENTS (order_id, user_id, pay_type, amount)
+            VALUES (#{orderId}, #{userId}, #{payType}, #{amount})
+        </insert>
+        <select id="findPaymentById" resultMap="records.payment">
+            SELECT
+            <include refid="columns.payment"/>
+            FROM PAYMENTS P
+            WHERE P.order_id = #{orderId}
+        </select>
+</mapper>

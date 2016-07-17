@@ -52,6 +52,7 @@ public class Models extends AbstractModule {
         bind(com.thoughtworks.api.infrastructure.core.ProductRepository.class).to(com.thoughtworks.api.infrastructure.repositories.ProductRepository.class);
         bind(com.thoughtworks.api.infrastructure.core.UserRepository.class).to(com.thoughtworks.api.infrastructure.repositories.UserRepository.class);
         bind(com.thoughtworks.api.infrastructure.core.OrderRepository.class).to(com.thoughtworks.api.infrastructure.repositories.OrderRepository.class);
+        bind(com.thoughtworks.api.infrastructure.core.PaymentRepository.class).to(com.thoughtworks.api.infrastructure.repositories.PaymentRepository.class);
 
 
     }
