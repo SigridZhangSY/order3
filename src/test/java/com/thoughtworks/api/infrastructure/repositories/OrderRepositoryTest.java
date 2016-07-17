@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -58,6 +59,19 @@ public class OrderRepositoryTest {
         List<Order> order_res = orderRepository.getOrdersForUser(userId);
         assertEquals(order_res.size(), 1);
         assertThat(order_res.get(0).getName(), is("kayla"));
+
+    }
+
+    @Test
+    public void should_get_order_details(){
+        User user = userRepository.createUser(TestHelper.user("sdcc"));
+        String userId = user.getId();
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+        String productId = product.getId();
+        Order order = orderRepository.createOrder(TestHelper.order("kayla", productId), userId);
+
+        Order order_res = orderRepository.getOrderDetails(order.getId());
+        assertThat(order_res.getName(), is("kayla"));
 
     }
 

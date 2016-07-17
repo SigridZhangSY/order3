@@ -13,4 +13,5 @@ public interface OrderMapper {
     int saveOrderItem(List<Map<String, Object>> info);
     Order findById(String orderId);
     List<Order> findOrders(String userId);
+    Order getOrderDetailsById(String orderId);
 }
