@@ -2,6 +2,7 @@ package com.thoughtworks.api.web;
 
 import com.thoughtworks.api.infrastructure.core.User;
 import com.thoughtworks.api.infrastructure.core.UserRepository;
+import com.thoughtworks.api.infrastructure.records.OrderRecord;
 import com.thoughtworks.api.infrastructure.records.UserRecord;
 import com.thoughtworks.api.web.exception.InvalidParameterException;
 import com.thoughtworks.api.web.jersey.Routes;
@@ -9,6 +10,7 @@ import com.thoughtworks.api.web.jersey.Routes;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -36,7 +38,8 @@ public class UserResource {
     @POST
     @Path("{userId}/products")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createOrder(){
-        return Response.status(201).build();
+    public Response createOrder(@PathParam("userId") String userId,
+                                @Context Routes routes){
+        return Response.created(routes.order(new OrderRecord(userId))).build();
     }
 }
