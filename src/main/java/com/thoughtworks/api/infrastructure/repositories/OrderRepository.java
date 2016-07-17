@@ -46,6 +46,8 @@ public class OrderRepository implements com.thoughtworks.api.infrastructure.core
         return productMapper.getPrice(productId);
     }
 
+
+
     private String nextIdentity() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }

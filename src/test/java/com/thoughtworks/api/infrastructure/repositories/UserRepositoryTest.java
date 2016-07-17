@@ -35,4 +35,11 @@ public class UserRepositoryTest {
         assertThat(user_res.getName(), is("kayla"));
     }
 
+    @Test
+    public void should_find_user_by_id(){
+        User user = userRepository.createUser(TestHelper.user("kayla"));
+        User user_res = userRepository.findUserById(user.getId()).orElseThrow(() -> new NotFoundException("Product not found"));
+
+        assertThat(user_res.getId(), is(user.getId()));
+    }
 }
