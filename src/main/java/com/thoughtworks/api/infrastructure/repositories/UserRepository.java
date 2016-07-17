@@ -5,6 +5,7 @@ import com.thoughtworks.api.infrastructure.mybatis.mappers.UserMapper;
 
 import javax.inject.Inject;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -20,6 +21,11 @@ public class UserRepository implements com.thoughtworks.api.infrastructure.core.
         userMapper.save(info);
         return userMapper.findById(userId);
 
+    }
+
+    @Override
+    public Optional<User> findUserByName(String name) {
+        return Optional.ofNullable(userMapper.findByName(name));
     }
 
     private String nextIdentity() {

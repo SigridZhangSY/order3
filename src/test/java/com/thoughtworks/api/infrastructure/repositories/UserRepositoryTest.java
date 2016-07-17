@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -24,5 +25,13 @@ public class UserRepositoryTest {
         User user = userRepository.createUser(TestHelper.user("kayla"));
 
         assertThat(user.getName(), is("kayla"));
+    }
+
+    @Test
+    public void should_find_user_by_name(){
+        User user = userRepository.createUser(TestHelper.user("kayla"));
+        User user_res = userRepository.findUserByName("kayla").orElseThrow(() -> new NotFoundException("Product not found"));
+
+        assertThat(user_res.getName(), is("kayla"));
     }
 }
