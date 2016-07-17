@@ -202,4 +202,14 @@ public class UserResourceTest extends ApiSupport {
 
     }
 
+    @Test
+    public void should_return_404_when_no_payment_exist(){
+        User user = userRepository.createUser(TestHelper.user("sdcc"));
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+        Order order = orderRepository.createOrder(TestHelper.order("kayla", product.getId()), user.getId());
+        Response get = get("/users/" + user.getId() + "/orders/" + order.getId() + "/payment");
+
+        assertThat(get.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
+    }
+
 }
