@@ -59,4 +59,10 @@ public class TestHelper {
 
         }};
     }
+
+    public static Map<String, Object> user(String name){
+        return new HashMap<String, Object>(){{
+            put("name", name);
+        }};
+    }
 }
