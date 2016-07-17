@@ -15,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,6 +46,15 @@ public class UserResource {
                                 @Context Routes routes,
                                 @Context OrderRepository orderRepository,
                                 @Context UserRepository userRepository){
+        if(info.getOrDefault("name", "").toString().trim().isEmpty() ||
+                info.getOrDefault("address", "").toString().trim().isEmpty() ||
+                info.getOrDefault("phone", "").toString().trim().isEmpty() ||
+                info.getOrDefault("order_items", "").toString().trim().isEmpty())
+            throw new InvalidParameterException("name, address, phone and order_items are required");
+        List<Map<String, Object>> items = (List<Map<String, Object>>)info.get("order_items");
+        if(items.size() == 0)
+            throw new InvalidParameterException("order_items can't be empty");
+
         Optional<User> user = userRepository.findUserById(userId);
         if(user.isPresent() == false)
             return Response.status(Response.Status.BAD_REQUEST).entity("User dose not exists").build();
