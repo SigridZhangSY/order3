@@ -1,6 +1,7 @@
 package com.thoughtworks.api.infrastructure.resources;
 
 import com.thoughtworks.api.infrastructure.core.*;
+import com.thoughtworks.api.infrastructure.core.PaymentRepository;
 import com.thoughtworks.api.support.ApiSupport;
 import com.thoughtworks.api.support.ApiTestRunner;
 import com.thoughtworks.api.support.TestHelper;
@@ -35,6 +36,9 @@ public class UserResourceTest extends ApiSupport {
 
     @Inject
     OrderRepository orderRepository;
+
+    @Inject
+    PaymentRepository paymentRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -156,6 +160,17 @@ public class UserResourceTest extends ApiSupport {
         Response post = post("/users/" + user.getId() + "/orders/" + order.getId() + "/payment", TestHelper.payment());
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
 
+    }
+
+    @Test
+    public void should_return_400_when_payment_exists(){
+        User user = userRepository.createUser(TestHelper.user("sdcc"));
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+        Order order = orderRepository.createOrder(TestHelper.order("kayla", product.getId()), user.getId());
+        Payment payment = paymentRepository.createPaymentForOrder(TestHelper.payment(),user.getId(), order.getId());
+
+        Response post = post("/users/" + user.getId() + "/orders/" + order.getId() + "/payment", TestHelper.payment());
+        assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
     }
 
 }
