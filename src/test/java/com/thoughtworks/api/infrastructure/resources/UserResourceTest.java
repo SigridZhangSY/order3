@@ -1,9 +1,6 @@
 package com.thoughtworks.api.infrastructure.resources;
 
-import com.thoughtworks.api.infrastructure.core.Product;
-import com.thoughtworks.api.infrastructure.core.ProductRepository;
-import com.thoughtworks.api.infrastructure.core.User;
-import com.thoughtworks.api.infrastructure.core.UserRepository;
+import com.thoughtworks.api.infrastructure.core.*;
 import com.thoughtworks.api.support.ApiSupport;
 import com.thoughtworks.api.support.ApiTestRunner;
 import com.thoughtworks.api.support.TestHelper;
@@ -33,6 +30,9 @@ public class UserResourceTest extends ApiSupport {
 
     @Inject
     ProductRepository productRepository;
+
+    @Inject
+    OrderRepository orderRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -66,7 +66,7 @@ public class UserResourceTest extends ApiSupport {
         User user = userRepository.createUser(TestHelper.user("kayla"));
         Product product = productRepository.createProduct(TestHelper.product("apple"));
 
-        Response post = post("/users/" + user.getId() + "/products", TestHelper.order("kayla", product.getId()));
+        Response post = post("/users/" + user.getId() + "/orders", TestHelper.order("kayla", product.getId()));
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
 
     }
@@ -76,7 +76,7 @@ public class UserResourceTest extends ApiSupport {
         User user = userRepository.createUser(TestHelper.user("kayla"));
         Product product = productRepository.createProduct(TestHelper.product("apple"));
 
-        Response post = post("/users/1/products", TestHelper.order("kayla", product.getId()));
+        Response post = post("/users/1/orders", TestHelper.order("kayla", product.getId()));
         assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
 
     }
@@ -86,7 +86,7 @@ public class UserResourceTest extends ApiSupport {
         User user = userRepository.createUser(TestHelper.user("kayla"));
         Product product = productRepository.createProduct(TestHelper.product("apple"));
         Map<String, Object> map = new HashMap<>();
-        Response post = post("/users/1/products", map);
+        Response post = post("/users/1/orders", map);
         assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
 
     }
@@ -94,9 +94,18 @@ public class UserResourceTest extends ApiSupport {
     @Test
     public void should_return_400_when_create_order_with_product_not_exists(){
         User user = userRepository.createUser(TestHelper.user("kayla"));
-        Response post = post("/users/" + user.getId() + "/products", TestHelper.order("kayla", "1"));
+        Response post = post("/users/" + user.getId() + "/orders", TestHelper.order("kayla", "1"));
         assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
 
+    }
+
+    @Test
+    public void should_return_200_when_get_orders(){
+        User user = userRepository.createUser(TestHelper.user("kayla"));
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+        Order order = orderRepository.createOrder(TestHelper.order("kayla",product.getId()), user.getId());
+        Response get = get("/users/" + user.getId() + "/orders");
+        assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
     }
 
 }
