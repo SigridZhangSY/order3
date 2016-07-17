@@ -29,6 +29,11 @@ public class ProductRepository implements com.thoughtworks.api.infrastructure.co
         return productMapper.getProducts();
     }
 
+    @Override
+    public Product findProductById(String productId) {
+        return productMapper.findById(productId);
+    }
+
     private String nextIdentity() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }

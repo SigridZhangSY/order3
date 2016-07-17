@@ -11,4 +11,6 @@ public interface ProductRepository {
     Product createProduct(Map info);
 
     List<Product> getAllProducts();
+
+    Product findProductById(String productId);
 }

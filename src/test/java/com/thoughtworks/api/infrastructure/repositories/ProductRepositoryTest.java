@@ -42,4 +42,12 @@ public class ProductRepositoryTest {
         assertEquals(res.size(), 1);
         assertThat(res.get(0).getName(), is("apple"));
     }
+
+    @Test
+    public void should_find_product_by_id(){
+        Product product = productRepository.createProduct(TestHelper.product("apple"));
+        Product product_res = productRepository.findProductById(product.getId());
+
+        assertThat(product_res.getName(), is("apple"));
+    }
 }
