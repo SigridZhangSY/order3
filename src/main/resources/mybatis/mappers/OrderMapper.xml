@@ -2,7 +2,13 @@
 <mapper namespace="com.thoughtworks.api.infrastructure.mybatis.mappers.OrderMapper">
     <insert id="saveOrder">
         INSERT INTO ORDERS (id, user_id, name, address, phone, total_price)
-        VALUES(#{id}, #{user_id}, #{name}, #{address}, #{phone}, #{total_price})
+        VALUES(#{info.id}, #{info.user_id}, #{info.name}, #{info.address}, #{info.phone}, #{info.total_price});
+
+        INSERT INTO ORDERITEMS (id, order_id, product_id, quantity, amount)
+        VALUES
+        <foreach collection="info.order_items" item="item" open="(" separator=","  close=")">
+            #{item.id}, #{item.order_id}, #{item.product_id}, #{item.quantity}, #{item.amount}
+        </foreach>
     </insert>
     <insert id="saveOrderItem" parameterType="java.util.List">
         INSERT INTO ORDERITEMS (id, order_id, product_id, quantity, amount)

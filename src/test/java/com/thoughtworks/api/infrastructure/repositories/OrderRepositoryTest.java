@@ -44,7 +44,6 @@ public class OrderRepositoryTest {
         Product product = productRepository.createProduct(TestHelper.product("apple"));
         String productId = product.getId();
         Order order = orderRepository.createOrder(TestHelper.order("kayla", productId), userId);
-
         assertThat(order.getName(), is("kayla"));
     }
 
@@ -72,6 +71,7 @@ public class OrderRepositoryTest {
 
         Order order_res = orderRepository.getOrderDetails(order.getId()).orElseThrow(() -> new NotFoundException("Order not found"));
         assertThat(order_res.getName(), is("kayla"));
+        assertThat(order_res.getItems().size(), is(1));
 
     }
 
